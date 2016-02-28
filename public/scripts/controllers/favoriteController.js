@@ -2,7 +2,7 @@ myApp.controller('FavoriteController', ['$scope', '$http', 'DataFactory', functi
     $scope.favorites = [];
     $scope.dataFactory = DataFactory;
 
-    if($scope.dataFactory.peopleData() === undefined) {
+    if($scope.dataFactory.favoriteData() === undefined) {
         // initial load
         $scope.dataFactory.retrieveData().then(function() {
             $scope.favorites = $scope.dataFactory.favoriteData();
