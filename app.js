@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Routes
-app.use('/favorites', favorites);
+app.use('/favorite', favorites);
 
 // Serve back static files
 app.use(express.static('public'));

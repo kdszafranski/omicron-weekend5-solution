@@ -1,7 +1,8 @@
-myApp.controller('FavoriteController', ['$scope', '$http', 'DataFactory', function($scope, $http, DataFactory) {
+myApp.controller('FavoriteController', ['$scope', 'DataFactory', function($scope, DataFactory) {
     $scope.favorites = [];
     $scope.dataFactory = DataFactory;
 
+    // force data update
     if($scope.dataFactory.favoriteData() === undefined) {
         // initial load
         $scope.dataFactory.retrieveData().then(function() {

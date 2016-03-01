@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
     var results = [];
 
     pg.connect(connect, function(err, client, done) {
-        var query = client.query('SELECT * FROM favorites');
+        var query = client.query('SELECT * FROM favorites ORDER BY id DESC');
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -27,8 +27,15 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+    pg.connect(connect, function(err, client, done) {
+        client.query(
+            'INSERT INTO favorites (pet_id, pet_name, short_description, img_url) ' +
+            'VALUES ($1, $2, $3, $4)',
+        [req.body.petID, req.body.petName, req.body.description, req.body.image]
+        );
+        res.send('posted');
+    });
 
-    res.send('posted');
 });
 
 module.exports = router;

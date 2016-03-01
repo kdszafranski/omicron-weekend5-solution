@@ -2,6 +2,16 @@ myApp.controller('FindController', ['$scope', '$http', 'DataFactory', function($
     $scope.dataFactory = DataFactory;
     $scope.animal = '';
     $scope.pet = {};
+    $scope.numFavs = 0;
+
+    if($scope.dataFactory.favoriteData() === undefined) {
+        $scope.dataFactory.retrieveData().then(function() {
+            $scope.numFavs = $scope.dataFactory.getNumFavorites();
+        });
+    } else {
+        $scope.numFavs = $scope.dataFactory.getNumFavorites();
+    }
+
 
     $scope.changeAnimal = function() {
         console.log($scope.animal);
@@ -28,8 +38,34 @@ myApp.controller('FindController', ['$scope', '$http', 'DataFactory', function($
         $http.jsonp(request).then(
             function(response) {
                 $scope.pet = response.data.petfinder.pet;
+                console.log($scope.pet);
             }
         );
     }
+
+    $scope.saveFavorite = function() {
+        var favorite = {
+            petID: $scope.pet.id.$t,
+            petName: $scope.pet.name.$t,
+            description: '',
+            //image: ''
+        };
+
+        if($scope.pet.description.$t) {
+            favorite.description = $scope.pet.description.$t.substring(0, 99);
+        }
+
+        var photos = $scope.pet.media.photos;
+        console.log('Photos: ', photos);
+        if(photos != undefined) {
+            favorite.image = $scope.pet.media.photos.photo[0].$t;
+        }
+
+        $scope.dataFactory.saveFavorite(favorite).then(function() {
+            $scope.numFavs = $scope.dataFactory.getNumFavorites();
+        });
+
+
+    };
 
 }]);
