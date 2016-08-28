@@ -3,37 +3,55 @@ var router = express.Router();
 var pg = require('pg');
 var connect = require('../connection');
 
-router.get('/', function(req, res) {
-    var results = [];
-
-    pg.connect(connect, function(err, client, done) {
-        var query = client.query('SELECT * FROM favorites ORDER BY id DESC');
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        // close connection
-        query.on('end', function() {
-            done();
-            return res.json(results);
-        });
+router.get('/count', function(req, res) {
+  console.log("here");
+  pg.connect(connect, function(err, client, done) {
+    client.query('SELECT COUNT(id) as count FROM favorites',
+      function(err, result) {
+        done();
 
         if(err) {
-            console.log(err);
+          console.log(err);
+          res.sendStatus(500);
+        } else {
+          res.send(result.rows[0].count);
         }
+    });
+  });
+});
+
+router.get('/', function(req, res) {
+      pg.connect(connect, function(err, client, done) {
+        client.query('SELECT * FROM favorites ORDER BY id DESC',
+          function(err, result) {
+            done();
+
+            if(err) {
+              console.log(err);
+              res.sendStatus(500);
+            } else {
+              res.send(result);
+            }
+        });
     });
 });
 
 router.post('/', function(req, res) {
     pg.connect(connect, function(err, client, done) {
         client.query(
-            'INSERT INTO favorites (pet_id, pet_name, short_description, img_url) ' +
+            'INSERT INTO favorites (petfinder_id, pet_name, pet_description, pet_image_url) ' +
             'VALUES ($1, $2, $3, $4)',
-        [req.body.petID, req.body.petName, req.body.description, req.body.image]
-        );
-        res.send('posted');
+        [req.body.petID, req.body.petName, req.body.description, req.body.image],
+        function(err, result) {
+          done();
+
+          if(err) {
+            console.log(err);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(201);
+          }
+        });
     });
 
 });

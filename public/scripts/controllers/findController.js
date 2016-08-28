@@ -1,17 +1,7 @@
-myApp.controller('FindController', ['$scope', '$http', 'DataFactory', function($scope, $http, DataFactory) {
-    $scope.dataFactory = DataFactory;
+myApp.controller('FindController', ['$scope', '$http', function($scope, $http) {
     $scope.animal = '';
     $scope.pet = {};
     $scope.numFavs = 0;
-
-    if($scope.dataFactory.favoriteData() === undefined) {
-        $scope.dataFactory.retrieveData().then(function() {
-            $scope.numFavs = $scope.dataFactory.getNumFavorites();
-        });
-    } else {
-        $scope.numFavs = $scope.dataFactory.getNumFavorites();
-    }
-
 
     $scope.changeAnimal = function() {
         console.log($scope.animal);
@@ -61,11 +51,25 @@ myApp.controller('FindController', ['$scope', '$http', 'DataFactory', function($
             favorite.image = $scope.pet.media.photos.photo[0].$t;
         }
 
-        $scope.dataFactory.saveFavorite(favorite).then(function() {
-            $scope.numFavs = $scope.dataFactory.getNumFavorites();
+        $http.post('/favorite', favorite).then(function(response) {
+          if(response.status == 201) {
+            getNumFavorites();
+          } else {
+            console.log("error posting new favorite");
+          }
         });
-
-
     };
+
+    function getNumFavorites() {
+      $http.get('/favorite/count').then(function(response) {
+        console.log('count response: ', response);
+        if(response.status == 200) {
+          $scope.numFavs = response.data;
+        } else {
+          console.log("error getting favorite count");
+        }
+
+      });
+    }
 
 }]);
