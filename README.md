@@ -1,5 +1,6 @@
-# API Lecture Notes
-PetFinder API implmentations in jQuery and Angular. You need your own API Key!
+# Omicron Weekend 5 Solution
+
+PetFinder API requires your own API Key!
 
 https://www.petfinder.com/developers/api-key
 
