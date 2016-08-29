@@ -1,0 +1,9 @@
+.favrow {
+  border-bottom: 2px solid gray;
+  margin: 30px;
+  padding: 10px;
+}
+
+.favrow h3 {
+  margin-top: 0;
+}

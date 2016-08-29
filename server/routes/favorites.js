@@ -67,4 +67,25 @@ router.get('/', function(req, res) {
   });
 });
 
+// remove a favorite
+router.delete('/:pet_id', function(req, res) {
+  pg.connect(connection, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+    }
+    client.query('DELETE FROM favorites WHERE pet_id = $1',
+      [req.params.pet_id],
+      function(err, result) {
+        done();
+
+        if(err) {
+          console.log('query error:', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+    });
+  });
+});
+
 module.exports = router;

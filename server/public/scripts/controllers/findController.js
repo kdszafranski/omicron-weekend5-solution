@@ -36,7 +36,6 @@ myApp.controller('findController', ['$scope', '$http', function($scope, $http) {
       $http.jsonp(request).then(
           function(response) {
               $scope.pet = response.data.petfinder.pet;
-              // console.log($scope.pet);
           }
       );
   }
@@ -54,9 +53,8 @@ myApp.controller('findController', ['$scope', '$http', function($scope, $http) {
     }
 
     var photos = $scope.pet.media.photos;
-    // console.log('photos: ', photos);
     if(photos != undefined) {
-      favorite.image = photos.photo[0].$t;
+      favorite.image = photos.photo[1].$t;
     }
 
     console.log('new favorite: ', favorite);

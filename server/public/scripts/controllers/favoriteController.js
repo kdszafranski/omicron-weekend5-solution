@@ -15,4 +15,16 @@ myApp.controller('favoriteController', ['$scope', '$http', function($scope, $htt
     });
   }
 
+  $scope.removeFavorite = function(favorite) {
+    if(confirm("Really remove " + favorite.pet_name + " from your list?")) {
+      $http.delete('/favorites/' + favorite.pet_id).then(function(response) {
+        if(response.status == 500) {
+          console.log("error deleting favorite");
+        } else {
+          getFavorites();
+        }
+      })
+    }
+  }
+
 }]);
