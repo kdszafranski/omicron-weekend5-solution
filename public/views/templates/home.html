@@ -1,34 +1,22 @@
 <div class="row">
-    <div class="col-md-6 col-md-offset-3 text-center">
-        <h2>Find-a-Pet</h2>
-    </div>
+  <div class="col-md-6 col-md-offset-3 text-center">
+    <h2>Find-a-Pet</h2>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-    <form>
-        <label for="animalType">Animal Type: </label>
-        <select name="animalType" id="animalType" ng-model="animal" ng-change="changeAnimal()">
-            <option value="">Choose Type</option>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="bird">Bird</option>
-            <option value="barnyard">Barnyard</option>
-        </select>
-    </form>
-    </div>
-    <div>
-        Favorites: {{numFavs}}
-    </div>
+  <div class="col-md-6 col-md-offset-3">
+
+  </div>
+  <div>
+    Favorites:
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <h2>{{pet.name.$t}}</h2>
-        <p>{{pet.description.$t}}</p>
+  <div class="col-md-6 text-right">
+  </div>
+  <div class="col-md-5">
 
-        <form ng-show="pet.id.$t">
-            <button ng-click="saveFavorite()" class="btn btn-info">Favorite</button>
-        </form>
-    </div>
+  </div>
 </div>

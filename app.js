@@ -1,20 +1,20 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var favorites = require('./routes/favorites');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Routes
-app.use('/favorite', favorites);
+// requests to /public are for static files
+app.use('/public', express.static(__dirname + '/public/'));
 
-// Serve back static files
-app.use(express.static('public'));
-app.use(express.static('public/views'));
-app.use(express.static('public/scripts'));
-app.use(express.static('public/styles'));
-app.use(express.static('public/vendors'));
+// Routes
+
+
+// index file request
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + "/public/views/index.html");
+});
 
 
 app.set("port", process.env.PORT || 5000);
