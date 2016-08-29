@@ -6,17 +6,24 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-
+    <!-- drop down -->
+    <select name="animalType" ng-model="animalType" ng-change="changeAnimal()">
+      <option value="">Choose an Animal</option>
+      <option ng-repeat="pet in animals" value="{{pet.type}}">{{pet.display}}</option>
+    </select>
   </div>
   <div>
-    Favorites:
+    Favorites: {{favCount}}
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-6 text-right">
+    <img ng-if="pet.media.photos.photo[2].$t" ng-src="{{pet.media.photos.photo[2].$t}}" />
   </div>
   <div class="col-md-5">
-
+    <h3>{{pet.name.$t}}</h3>
+    <p>{{pet.description.$t}}</p>
+    <button class="btn btn-info" ng-click="addFavorite()">Add to Favorites</button>
   </div>
 </div>
